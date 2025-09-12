@@ -14,9 +14,31 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+  validate_positive_sides(a, b, c)
+  validate_triangle_inequality(a, b, c)
+  classify_triangle(a, b, c)
+end
+
+private
+
+def validate_positive_sides(a, b, c)
+  raise TriangleError, 'All sides must be positive' if a <= 0 || b <= 0 || c <= 0
+end
+
+def validate_triangle_inequality(a, b, c)
+  raise TriangleError, 'Triangle inequality violated' if (a + b <= c) || (b + c <= a) || (a + c <= b)
+end
+
+def classify_triangle(a, b, c)
+  return :equilateral if a == b && b == c
+  return :isosceles if a == b || b == c || c == a
+
+  :scalene
 end
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
+  def initialize(message)
+    super
+  end
 end
